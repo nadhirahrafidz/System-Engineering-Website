@@ -25,6 +25,7 @@ class QuestionnaireTable(APIView):
 # Only retrieves questions for active questionnaires
 class QuestionTable(APIView):
     def get(self, request):
+        # Exception of no data found
         data = Questions.objects.filter(questionnaireID__active_flag=1)
         serializer = QuestionSerializer(data, many=True)
         return Response(serializer.data)
@@ -32,24 +33,28 @@ class QuestionTable(APIView):
 # Only retrieves answers for active questionnaires
 class AnswerTable(APIView):
     def get(self, request):
+        # Exception of no data found
         data = Answer.objects.filter(questionnaireID__active_flag=1)
         serializer = AnswerSerializer(data, many=True)
         return Response(serializer.data)
 
 class QuestionAnswerTable(APIView):
     def get(self, request):
+        # Exception of no data found
         data = QuestionAnswer.objects.filter(questionnaireID__active_flag=1)
         serializer = QuestionAnswerSerializer(data, many=True)
         return Response(serializer.data)
 
 class LogicTable(APIView):
     def get(self, request):
+        # Exception of no data found
         data = Logic.objects.filter(questionnaireID__active_flag=1)
         serializer = LogicSerializer(data, many=True)
         return Response(serializer.data)
 
 class QRelTable(APIView):
     def get(self, request):
+        # Exception of no data found
         data = QuestionRelation.objects.filter(questionnaireID__active_flag=1)
         serializer = QRelSerializer(data, many=True)
         return Response(serializer.data)
@@ -57,6 +62,7 @@ class QRelTable(APIView):
 class PatientTable(APIView):
     def get(self, request):
         location = request.data.get("clusterID")
+        # Exception of no data found
         data = Patient.objects.filter(householdID__parentLocID = location)
         serializer = PatientSerializer(data, many=True)
         return Response(serializer.data)
@@ -67,6 +73,7 @@ class PatientTable(APIView):
 class PatientAssessmentTable(APIView):
     def get(self, request):
         location = request.data.get("clusterID")
+        # Exception of no data found
         data = PatientAssessment.objects.filter(assess_patientID__householdID__parentLocID = location)
         serializer = PatientAssessmentSerializer(data, many=True)
         return Response(serializer.data)
@@ -83,6 +90,7 @@ class PatientAssessmentTable(APIView):
                 assess_questionnaireID = questionnaire, 
                 start = item['start'],
                 defaults = {'questionnaireStatus': item['questionnaireStatus'], 'end': item['end']})
+            
             if created == False:
                 person.questionnaireStatus = item['questionnaireStatus']
                 person.end = item['end']
@@ -93,14 +101,13 @@ class PatientAssessmentTable(APIView):
 
 class QuestionResponseTable(APIView):
     def get(self, request):
-        print("Getting")
         return Response("GET")
     
     def post(self, request):
         results = []
         responses = request.data.get("data")
         for response in responses: 
-            patient = get_object_or_404(Patient, pk=response['patientID'])
+            patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])
             questionnaire = get_object_or_404(Questionnaire, pk=response['questionnaireID'])
@@ -111,7 +118,9 @@ class QuestionResponseTable(APIView):
                                                 text=response['text'], 
                                                 questionnaireID=questionnaire,
                                                 date=response['date'])
-            responseInstance.save()
+            if created == False:
+                responseInstance.save()
+
             results.append(QuestionResponse.objects.get(pk=responseInstance.index))
         serializer = QuestionResponseSerializer(results, many=True)
         return Response(serializer.data)
