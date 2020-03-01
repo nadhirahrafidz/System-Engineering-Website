@@ -4,11 +4,13 @@ from collections import OrderedDict
 from django.template import RequestContext
 from django.template import loader
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 from API.serializers import *
 from Questions.models import *
 from .forms import *
 
+@login_required
 def questionnaires(request):
     questionnaires = Questionnaire.objects.all() 
     template = loader.get_template('questionnaires.html')
@@ -30,7 +32,7 @@ def questionnaires(request):
     }
     return HttpResponse(template.render(context, request))
 
-
+@login_required
 def newQuestionnaire(request):
     if request.method == 'POST':
         form = questionnaireForm(request.POST)
@@ -42,7 +44,7 @@ def newQuestionnaire(request):
     return render(request, 'new_questionnaire.html', {'form': form} )
 
 
-
+@login_required
 def addQuestions(request, questionnaire_id):
     rangeArray = []
     if request.method == 'POST':
@@ -78,6 +80,9 @@ def addQuestions(request, questionnaire_id):
         } 
     return render(request, 'question_qnn.html', context)
 
+
+
+@login_required
 def addAnswers(request, questionnaire_id, question_id):
     question = get_object_or_404(Questions, pk=question_id)
     questionnaire = get_object_or_404(Questionnaire, pk=questionnaire_id)
@@ -101,6 +106,8 @@ def addAnswers(request, questionnaire_id, question_id):
     }
     return render(request, 'ans_qnn.html', context)
 
+
+@login_required
 def addLogic(request, questionnaire_id):
     formset = qrelFormset(request.GET or None, form_kwargs={'questionnaire_id': questionnaire_id})
     questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
@@ -175,6 +182,8 @@ def addLogic(request, questionnaire_id):
 
     return render(request, 'logic.html', context)
 
+
+@login_required
 def ajaxAnswer(request):
     questionnaire_id = request.GET.get('questionnaire_id')
     question_id = request.GET.get('question_id')

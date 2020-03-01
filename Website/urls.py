@@ -8,6 +8,7 @@ from API import views as api_views
 from Builder import views as builder_views
 # from Reports import views as reports_views
 from Website.Auth import views as website_auth_views
+from Dashboard import views as dash_view
 
 # Michael Old Reports
 from Locations import views as location_views
@@ -32,4 +33,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 
     url(r'^questionnaires/', include(("Builder.urls", "Builder"), namespace="Builder")),
+    url('dashboard', dash_view.DashboardView, name='dashboard')
 ]
