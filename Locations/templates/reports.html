@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/reports.css' %}">
+    <title>Reports</title>
+</head>
+<body>
+    <h2>Reports</h2>
+<!--    <div class ="dropdown">-->
+<!--        <button class="dropbtn">Countries</button>-->
+<!--        <div class="dropdown-content">-->
+<!--            {% for country in countries %}-->
+<!--                <a href="/reports/{{country.locationID}}">{{country.locationName}}</a>-->
+<!--            {% endfor %}-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="dropdown">
+        <button class="dropbtn">Select Country
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            {% for country in countries %}
+                <a href="/reports/{{country.locationID}}">{{country.locationName}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Select Region
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            {% for region in regions %}
+                <a href="{{region.locationID}}">{{region.locationName}}</a>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Select Cluster
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+            {% for cluster in clusters %}
+                <a href="{{cluster.locationID}}">{{cluster.locationName}}</a>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

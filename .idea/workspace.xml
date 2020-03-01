@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c04146b5-a8a3-4f66-8459-1546ce4a0aeb" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Locations/templates/reports.html" beforeDir="false" afterPath="$PROJECT_DIR$/Locations/templates/reports.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Locations/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/Locations/views.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1XIvuQk87WOvydNtb0f5ZEKgz9z" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../OmniSci-master/OmniSci-master-101ea0704c5e6a76bb12efd1e3acd41364ea14d1" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\DELL\Desktop\WebsiteRepo\System-Engineering-Project\SysWebsite\Home\static\css" />
+      <recent name="C:\Users\DELL\Desktop\WebsiteRepo\System-Engineering-Project\SysWebsite\Home\templates" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c04146b5-a8a3-4f66-8459-1546ce4a0aeb" name="Default Changelist" comment="" />
+      <created>1580297799538</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1580297799538</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Added some templates">
+      <created>1581087504153</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1581087504153</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Added some templates&#10;Added the css files&#10;Added the first draft to the dropdown list">
+      <created>1581092350283</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1581092350283</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Added some templates&#10;Added the css files&#10;Added the first draft to the dropdown list">
+      <created>1581094549114</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1581094549114</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Added the regions list draft">
+      <created>1581094695142</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1581094695142</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Added the regions list draft">
+      <created>1581094739756</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1581094739756</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Added staticfiles management&#10;Changed the format of the dropdownlist">
+      <created>1581127169011</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1581127169011</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Added some templates" />
+    <MESSAGE value="Added some templates&#10;Added the css files&#10;Added the first draft to the dropdown list" />
+    <MESSAGE value="Added the regions list draft" />
+    <MESSAGE value="Added staticfiles management&#10;Changed the format of the dropdownlist" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added staticfiles management&#10;Changed the format of the dropdownlist" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="833" y="142" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1580753613905">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="833" y="142" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1536.824@0.0.1536.824" timestamp="1580753613905" />
+    <state x="662" y="0" key="CommitChangelistDialog2" timestamp="1581127167360">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="662" y="0" key="CommitChangelistDialog2/0.0.1536.824@0.0.1536.824" timestamp="1581127167360" />
+    <state x="601" y="137" key="VCS.ChangeListViewerDialog" timestamp="1581094579573">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="601" y="137" key="VCS.ChangeListViewerDialog/0.0.1536.824@0.0.1536.824" timestamp="1581094579573" />
+    <state x="348" y="156" key="Vcs.Push.Dialog.v2" timestamp="1581127172588">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="348" y="156" key="Vcs.Push.Dialog.v2/0.0.1536.824@0.0.1536.824" timestamp="1581127172588" />
+    <state x="449" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1580755330571">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="449" y="237" key="com.intellij.ide.util.TipDialog/0.0.1536.824@0.0.1536.824" timestamp="1580755330571" />
+    <state x="560" y="102" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1580746896940">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="560" y="102" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1536.824@0.0.1536.824" timestamp="1580746896940" />
+    <state x="947" y="333" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1581094599370">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="947" y="333" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1536.824@0.0.1536.824" timestamp="1581094599370" />
+    <state x="479" y="213" key="git4idea.merge.GitPullDialog" timestamp="1581182072266">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="479" y="213" key="git4idea.merge.GitPullDialog/0.0.1536.824@0.0.1536.824" timestamp="1581182072266" />
+    <state x="416" y="167" key="vcs.ApplyPatchDifferentiatedDialog" timestamp="1580751272905">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="416" y="167" key="vcs.ApplyPatchDifferentiatedDialog/0.0.1536.824@0.0.1536.824" timestamp="1580751272905" />
+  </component>
+</project>
