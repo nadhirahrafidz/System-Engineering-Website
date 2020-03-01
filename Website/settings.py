@@ -183,3 +183,5 @@ SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [
     ('picture', 'picture'),
     ('link', 'profile_url'),
 ]
+
+ALLOWED_HOSTS = ['10.0.2.2', 'localhost', '127.0.0.1']
