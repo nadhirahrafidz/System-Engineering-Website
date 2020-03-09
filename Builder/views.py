@@ -70,12 +70,20 @@ def addQuestions(request, questionnaire_id):
                 return redirect('answers/%s/' % question.pk)
 
     questionnaire = get_object_or_404(Questionnaire, pk=questionnaire_id)
-    questions = Questions.objects.filter(questionnaireID=questionnaire_id).values('questionString')   
+    questions = Questions.objects.filter(questionnaireID=questionnaire_id).values('questionID','questionString')
+    answers = QuestionAnswer.objects.filter(questionnaireID=questionnaire_id).select_related('answerID')
+    answer_array = []
+    for question in questions:
+        answerString = QuestionAnswer.objects.select_related().filter(questionnaireID=questionnaire_id, questionID = question['questionID'])
+        temp_array = []
+        for answers in answerString:
+            temp_array.append(answers.answerID.answerString)
+        answer_array.append(temp_array)
     form = questionForm()
-
     context= {
         'questionnaire':questionnaire,
         'questions': questions,
+        'answers': answer_array,
         'form':form,
         } 
     return render(request, 'question_qnn.html', context)

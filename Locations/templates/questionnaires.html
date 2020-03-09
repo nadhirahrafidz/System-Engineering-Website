@@ -4,15 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/questionnaires.css' %}" />
     <title>Questionnaires</title>
 </head>
 <body>
   
   <div class="container">
-    <h2>Questionnaires</h2>
+    <h2 class="title">Questionnaires</h2>
     
-    <a class="btn btn-primary" href={% url 'Builder:newQuestionnaire' %}>New Questionnaire</a>
+    <a class="btn btn-primary button-margin" href={% url 'Builder:newQuestionnaire' %}>New Questionnaire</a>
 
+    <h3>List of Questionnaires and Questions</h3>
     {% for data in data %}
 
     <div class="accordion" id="accordionExample">
@@ -23,6 +25,7 @@
             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#target{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseOne">
               {{data.questionnaireName}}
             </button>
+            <a href="http://127.0.0.1:8000/questionnaires/create/question/{{data.questionnaireID}}" class="small-font">Edit</a>
 
           </h2>
         </div>
