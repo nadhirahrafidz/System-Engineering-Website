@@ -2,11 +2,10 @@ from django.db import models
 from Users.models import Enumerator
 
 class Location(models.Model):
-    # locationID = models.IntegerField(verbose_name='locationID', primary_key=True)
     # AutoField is an Integer field that auto-increments
     locationID = models.AutoField(verbose_name='locationID',primary_key=True, default=0)
     locationName = models.CharField(verbose_name='locationName', max_length=45)
-    parentLocID = models.IntegerField(verbose_name='parentLocationID')
+    parentLocID = models.ForeignKey('self', verbose_name='parentLocationID', on_delete=models.CASCADE)
 
 
 class HouseHold(models.Model):

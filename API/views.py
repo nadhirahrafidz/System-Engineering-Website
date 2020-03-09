@@ -105,7 +105,9 @@ class QuestionResponseTable(APIView):
     
     def post(self, request):
         results = []
-        responses = request.data.get("data")
+        body_unicode = request.data.get("data")
+        responses = json.loads(body_unicode)
+        # responses = request.data.get("data")
         for response in responses: 
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
@@ -123,7 +125,7 @@ class QuestionResponseTable(APIView):
 
             results.append(QuestionResponse.objects.get(pk=responseInstance.index))
         serializer = QuestionResponseSerializer(results, many=True)
-        return Response(serializer.data)
+        return Response({"data": serializer.data})
 
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
