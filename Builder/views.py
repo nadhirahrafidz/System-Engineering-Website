@@ -119,11 +119,15 @@ def addAnswers(request, questionnaire_id, question_id):
 def addLogic(request, questionnaire_id):
     formset = qrelFormset(request.GET or None, form_kwargs={'questionnaire_id': questionnaire_id})
     questionnaire = Questionnaire.objects.get(pk=questionnaire_id)
+
     try:
         next_seq_num = Logic.objects.filter(questionnaireID = questionnaire_id).latest('seq_num').seq_num + 1
-        next_rel_id = Logic.objects.latest('rel_ID').rel_ID + 1
     except:
         next_seq_num = 1
+
+    try:
+        next_rel_id = Logic.objects.latest('rel_ID').rel_ID + 1
+    except:
         next_rel_id = 1
 
     if request.method == 'POST':
