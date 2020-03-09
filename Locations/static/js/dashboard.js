@@ -7,7 +7,7 @@ $('document').ready(function(){
     });
     $(function(ready){
         get_data(0,0,0)
-        
+        get_patient_data(0,0,0)    
     })
     
     
@@ -40,7 +40,13 @@ function get_patient_data(countryID, regionID, clusterID)
         },
         success: function(response) 
         {
-            console.log(response)
+            var i = 0
+            $("#patient_table_body").empty();
+            for(data in response.data)
+            {
+                build_row(response.data[i].patient_id,response.data[i].questionnaire_id,response.data[i].start);
+                i++;
+            }
         }
     });
 }
@@ -97,20 +103,23 @@ function build_pie_chart(data)
 $(function(ready){
     $('#id_country').change(function() {
         observe("#id_country", "#id_region");
-        country = $("#id_country option:selected").val()
-        get_data(country, 0, 0)
+        country = $("#id_country option:selected").val();
+        get_data(country, 0, 0);
+        get_patient_data(country,0,0);
     });
 
     $('#id_region').change(function() {
         observe("#id_region", "#id_cluster");
-        region = $("#id_region option:selected").val()
-        get_data(0, region, 0)
+        region = $("#id_region option:selected").val();
+        get_data(0, region, 0);
+        get_patient_data(0, region, 0); 
     });
 
     $('#id_cluster').change(function() {
         observe("#id_region", "#id_cluster");
-        cluster = $("#id_cluster option:selected").val()
-        get_data(0, 0, cluster)
+        cluster = $("#id_cluster option:selected").val();
+        get_data(0, 0, cluster);
+        get_patient_data(0, 0, cluster)
     });
 
 });

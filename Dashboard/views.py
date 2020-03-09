@@ -5,6 +5,7 @@ from .forms import *
 from Questions import models
 from Locations import models
 from API import serializers
+from django.forms.models import model_to_dict
 
 def DashboardView(request):
     form = dashboardForm()
@@ -80,6 +81,15 @@ def ajaxIncompletePatients(request):
                     assess_patientID__householdID__parentLocID__parentLocID__parentLocID = int(countryID)).values()
     elif countryID == '0':
         incomplete_patients = PatientAssessment.objects.filter(questionnaireStatus = "INCOMPLETE").values()
-    serializer = serializers.PatientAssessmentSerializer(incomplete_patients, many=True)
-    print(serializer)
-    return JsonResponse({'incomplete_patients': serializer})
+    
+    # serializer = serializers.PatientAssessmentSerializer(incomplete_patients, many=True)
+    # serializer = serializers.PatientSerializer(incomplete_patients, many=True)
+    data = []
+    for patient in incomplete_patients:
+        data.append({
+            'patient_id' : patient['assess_patientID_id'],
+            'questionnaire_id': patient['assess_questionnaireID_id'],
+            'start': patient['start']
+        })
+
+    return JsonResponse({'data':data})
