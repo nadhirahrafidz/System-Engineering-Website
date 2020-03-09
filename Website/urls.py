@@ -5,8 +5,8 @@ from rest_framework.authtoken.views import obtain_auth_token
 from django.contrib.auth import views as auth_views
 
 from API import views as api_views
+# Is Builder below required?
 from Builder import views as builder_views
-# from Reports import views as reports_views
 from Website.Auth import views as website_auth_views
 from Dashboard import views as dash_view
 
@@ -33,5 +33,5 @@ urlpatterns = [
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
 
     url(r'^questionnaires/', include(("Builder.urls", "Builder"), namespace="Builder")),
-    url('dashboard', dash_view.DashboardView, name='dashboard')
+    url(r'^dashboard/', include(("Dashboard.urls", "Dashboard"), namespace="Dashboard")),
 ]

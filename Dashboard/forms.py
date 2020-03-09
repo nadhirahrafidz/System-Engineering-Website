@@ -9,8 +9,11 @@ class dashboardForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(dashboardForm, self).__init__(*args, **kwargs)
-        emptyChoiceList = [('null', '----------')]
-        print(Location.objects.all().values())
-        countryList = [(country.locationID, country.locationName) for country in Location.objects.filter(locationID = '-1')]
-        choices = emptyChoiceList + countryList
-        self.fields['country'].choices = choices
+        emptyChoiceList = [('0', '----------')]
+        countryList = [(country.locationID, country.locationName) for country in Location.objects.filter(parentLocID = -1)]
+        allLocations = [(location.locationID, location.locationName) for location in Location.objects.all().exclude(pk = -1)]
+        countryChoices = emptyChoiceList + countryList
+        otherChoices = emptyChoiceList + allLocations
+        self.fields['country'].choices = countryChoices
+        self.fields['region'].choices = otherChoices
+        self.fields['cluster'].choices = otherChoices

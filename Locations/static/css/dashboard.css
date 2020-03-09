@@ -1,0 +1,12 @@
+.margin-top {
+    margin-top: 40px;
+}
+
+.center{
+    margin: 0 auto 0 auto;
+}
+
+.table-size {
+    width: 200px;
+    height: auto;
+}

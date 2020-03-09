@@ -107,9 +107,9 @@ class QuestionResponseTable(APIView):
         body_unicode = request.data.get("data")
         responses = json.loads(body_unicode)
         results = []
+        body_unicode = request.data.get("data")
+        responses = json.loads(body_unicode)
         # responses = request.data.get("data")
-        print("responses: ")
-        print (type(responses))
         for response in responses: 
             #print("response: " + response)
             patient = get_object_or_404(Patient, patientID=response['patientID'])
