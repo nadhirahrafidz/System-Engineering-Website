@@ -58,10 +58,13 @@
                 <th scope="row">{{ forloop.counter }}</th>
                 <td>{{ question.questionString }}</td>
                 <td>
-                  <ul>   
-                    <li>
-                      <!-- {{ question.answerID.answerString }} -->
-                    </li>
+                  <ul>
+                    {% for answer in answers%}
+                      {% if forloop.counter == forloop.parentloop.counter %}
+                        {{answer}}
+                      {% endif %}
+                    {% endfor %}
+                    
                   </ul>
                 </td>
               </tr>

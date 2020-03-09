@@ -1,0 +1,14 @@
+.title{
+    text-align: center;
+    margin: 60px 0 50px 0;
+}
+
+.button-margin {
+    margin: 30px 0 40px 0;
+}
+
+.small-font{
+    font-size: small;
+    font-weight: 100;
+    text-align: right;
+}

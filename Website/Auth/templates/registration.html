@@ -20,6 +20,17 @@
         {% endif %}
     {% endfor %}
     <div class="col-sm-12 mt-2 text-center">
+        <button class="btn btn-warning">
+            <a href="http://127.0.0.1:8000/questionnaires">Questionnaires</a>
+        </button>
+        <button class="btn btn-warning">
+            <a href="http://127.0.0.1:8000/reports">Reports</a>
+        </button>
+        <button class="btn btn-warning">
+            <a href="http://127.0.0.1:8000/dashboard">Dashboard</a>
+        </button>
+    </div>
+    <div class="col-sm-12 mt-2 text-center">
         <button class="btn btn-danger">
         <a href="{% url 'logout' %}">Logout</a>
         </button>
