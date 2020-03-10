@@ -12,4 +12,5 @@ urlpatterns = [
     url(r'^Patients', api_views.PatientTable.as_view(), name='PatientAPI'),
     url(r'^PatientAssessment', api_views.PatientAssessmentTable.as_view(), name='PatientAPI'),
     url(r'^Response', api_views.QuestionResponseTable.as_view(), name='QuestionResponseAPI'),
+    url(r'^Household', api_views.HouseholeTable.as_view(), name='HouseholdAPI'),
 ]

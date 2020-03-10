@@ -130,6 +130,56 @@ class QuestionResponseTable(APIView):
         serializer = QuestionResponseSerializer(results, many=True)
         return Response({"data": serializer.data})
 
+class HouseholeTable(APIView):
+    def get(self, request):
+        clusterID = request.data.get("clusterID")
+        data = HouseHold.objects.filter(parentLocID=clusterID)
+        serializer = HouseholdSerializer(data, many=True)
+        return Response(serializer.data)
+    def post(self, request):
+        results = []
+        responses = request.data.get("data")
+        # body_unicode = request.data.get("data")
+        # responses = json.loads(body_unicode)
+        for response in responses:
+            parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
+            enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
+            responseInstance, created = HouseHold.objects.get_or_create(
+                householdID=response['householdID'],
+                parentLocID=parentLocID,
+                enumeratorID=enumeratorID,
+                date=response['date'],
+                village_name=response['village_name'],
+                street_name=response['street_name'],
+                gps=response['gps'],
+                availability=response['availability'],
+                reason_refusal=response['reason_refusal'],
+                visit_num=response['visit_num'],
+                key_informer=response['key_informer'],
+                tel1_num=response['tel1_num'],
+                tel1_owner=response['tel1_owner'],
+                tel2_num=response['tel2_num'],
+                tel2_owner=response['tel2_owner'],
+                consent=response['consent'],
+                a2q1=response['a2q1'],
+                a2q2=response['a2q2'],
+                a2q3=response['a2q3'],
+                a2q4=response['a2q4'],
+                a2q5=response['a2q5'],
+                a2q6=response['a2q6'],
+                a2q7=response['a2q7'],
+                a2q8=response['a2q8'],
+                a2q9=response['a2q9'],
+                a2q10=response['a2q10'],
+                a2q11=response['a2q11'],
+                a2q12=response['a2q12'],
+                a2q13=response['a2q13']
+            )
+            if created == False:
+                responseInstance.save()
+            results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
+        serializer = HouseholdSerializer(results, many=True)
+        return Response(serializer.data)
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
 # For developer use only -> should not be able to create new users from the website, only admin allowed to add new users

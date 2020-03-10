@@ -10,3 +10,13 @@
     width: 200px;
     height: auto;
 }
+
+.title{
+    text-align: center;
+    margin: 60px 0 50px 0;
+}
+
+.subtitle{
+    text-align: center;
+    margin: 30px 0 20px 0;
+}
