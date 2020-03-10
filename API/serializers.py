@@ -59,7 +59,7 @@ class QuestionResponseSerializer(serializers.ModelSerializer):
 class HouseholdSerializer(serializers.ModelSerializer):
     class Meta:
         model = HouseHold
-        fields = 'householdID', 'parentLocID', 'enumeratorID', 'date', 'village_name', 'street_name', 'gps', 'availability', 'reason_refusal', 'visit_num', 'key_informer', 'tel1_num', 'tel1_owner', 'tel2_num', 'tel2_owner', 'consent', 'a2q1', 'a2q2', 'a2q3', 'a2q4', 'a2q5', 'a2q6', 'a2q7', 'a2q8', 'a2q9', 'a2q10', 'a2q11', 'a2q12', 'a2q13'
+        fields = 'householdID', 'parentLocID', 'enumeratorID', 'date', 'village_street_name', 'gps_latitude', 'gps_longitude', 'availability', 'reason_refusal', 'visit_num', 'key_informer', 'tel1_num', 'tel1_owner', 'tel2_num', 'tel2_owner', 'consent', 'a2q1', 'a2q2', 'a2q3', 'a2q4', 'a2q5', 'a2q6', 'a2q7', 'a2q8', 'a2q9', 'a2q10', 'a2q11', 'a2q12', 'a2q13'
 
 
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
