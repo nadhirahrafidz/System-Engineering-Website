@@ -104,11 +104,14 @@ class QuestionResponseTable(APIView):
         return Response("GET")
     
     def post(self, request):
+        body_unicode = request.data.get("data")
+        responses = json.loads(body_unicode)
         results = []
         body_unicode = request.data.get("data")
         responses = json.loads(body_unicode)
         # responses = request.data.get("data")
         for response in responses: 
+            #print("response: " + response)
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])
