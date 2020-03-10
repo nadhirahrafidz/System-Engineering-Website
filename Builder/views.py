@@ -182,7 +182,6 @@ def addLogic(request, questionnaire_id):
     
     questions = Questions.objects.filter(questionnaireID = questionnaire_id)
     answers = Answer.objects.filter(questionnaireID = questionnaire_id)
-    # logForm = logicForm(questionnaire_id)
     lForm = logicForm(questionnaire_id= questionnaire_id)
     logic = Logic.objects.filter(questionnaireID = questionnaire_id).order_by('seq_num').select_related()
     context= {

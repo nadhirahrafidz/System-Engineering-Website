@@ -14,7 +14,7 @@
 <body>
     <div class="container">
         {% csrf_token %}
-        <h1>Dashboard</h1>
+        <h1 class="title">Dashboard</h1>
         <div class="row margin-top">
             <div class="col-sm">
                 {{ form.country | as_crispy_field }}
@@ -33,13 +33,13 @@
         </div>
         <div class="row">
             <div class="col-sm margin-top">
-            <canvas id="myChart" style="position: relative; height:80vh; width:120vw"></canvas>
+            <canvas id="myChart" style="position: relative; height:35vh"></canvas>
             </div>
         </div>
         <div class="row">
             <div class="col-sm margin-top">
                 <br>
-                <h2>Patients with an Incomplete Questionnaire Assessment Status</h2>
+                <h2 class="subtitle">Patients with an Incomplete Questionnaire Assessment Status</h2>
                 <br>
                 <table id="patient_table" class="table">
                     <thead>

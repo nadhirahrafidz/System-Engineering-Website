@@ -4,15 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link rel="stylesheet" href="{% static 'css/questionnaires.css' %}" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  
 
     <title>Add Questions</title>
 </head>
 <body>
     <div class="container">
-        <div class="col-6">
-        <h1>Add Logic</h1>
+        <div class="col-sm">
+        <h1 class="title">Add Logic</h1>
         <p id="questionnaire_id" hidden> {{ questionnaire_id }}</p>
         <form method="POST">
             {% csrf_token %}
@@ -26,10 +26,13 @@
                     {% endfor %}
                     <input type="button" value="Add More" id="add_more" class="btn btn-primary">
             </div>
+            <br>
                 <button type="submit" class="btn btn-primary" id="done_add">Done and Add More</button>
+                <a href="/questionnaires" class="btn btn-success">Finished</a>
             </form>        
             </div>
-            <div>
+            <div class="col-sm">
+              <br>
                 <table class="table">
                 <thead>
                     <tr>
