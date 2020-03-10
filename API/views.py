@@ -150,7 +150,6 @@ class HouseholeTable(APIView):
                 enumeratorID=enumeratorID,
                 date=response['date'],
                 village_street_name=response['village_street_name'],
-                street_name=response['street_name'],
                 gps_latitude=response['gps_latitude'],
                 gps_longitude=response['gps_longitude'],
                 availability=response['availability'],
