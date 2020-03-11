@@ -10,6 +10,39 @@ from API.serializers import *
 from Questions.models import *
 from .forms import *
 
+""" 
+    Access: Only users who have logged in
+
+    This app "Builder" corresponds to the Questionnaire building website feature. 
+    The Questionnaire building feature is made up of these components:
+
+    1. Questionnaire page (questionnaires() & questionnaires.html): 
+        - allows user to view all the questionnaires and its questions
+        - allows user to redirect to "Add Questions to Questionnaire" page
+        - allows user to redirect to "Create New Questionnaire" page 
+
+    2. Create New Questionnaire page (newQuestionnaire() & new_questionnaire.html)
+        - allows user to create new Questionnaire
+        - will automatically be INSERTED into server database's Questionnaire Table
+
+    3. Add Questions to Questionnaire page (addQuestions() & question_qnn.html)
+        - Allows user to create and add a new question for a questionnaire. 
+            > User will specify type of question, min & max number of answers accepted for the question, 
+            question instructions (optional)
+        - Question will automatically be added to server database's Questions Table 
+
+    4. Add and Associate Answers to Question page (addAnswers() & ans_qnn.html)
+        - Allows user to add & associate answers to a certain question
+        - Answer will automatically be added to server database's AnswerTable
+        - Question-Answer association will automatically be added to server database's QuestionAnswer Table
+        - If answer already already exists within the Answer Table, duplicate answer will not be created. 
+        Will use existing answer to be associated to the question
+    
+    5. Add Logic to Questionnaire (addLogic() & logic.html)
+        - Allows user to set the sequence of questions within the questionnaire
+        - Allows user to set skip logic within the questionnaire
+        - Automatically adds skip logic to server database Logic Table and QuestionRelation Table
+"""
 @login_required
 def questionnaires(request):
     questionnaires = Questionnaire.objects.all() 
@@ -20,7 +53,7 @@ def questionnaires(request):
             question = Questions.objects.filter(questionnaireID = questionnaire.questionnaireID)
             serializers = QuestionSerializer(question, many=True)
             for stuff in serializers.data:
-                # https://stackoverflow.com/questions/10058140/accessing-items-in-an-collections-ordereddict-by-index
+                # Reference: https://stackoverflow.com/questions/10058140/accessing-items-in-an-collections-ordereddict-by-index
                 questionList.append(list(stuff.items()))
             data.append({
                 'questionnaireID': questionnaire.questionnaireID, 

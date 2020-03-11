@@ -104,11 +104,11 @@ class QuestionResponseTable(APIView):
         return Response("GET")
     
     def post(self, request):
-        body_unicode = request.data.get("data")
-        responses = json.loads(body_unicode)
         results = []
         body_unicode = request.data.get("data")
-        responses = json.loads(body_unicode)
+        string_resp = [json.dumps(i) for i in body_unicode if i]
+        responses = [json.loads(i) for i in string_resp if i]
+        # responses = json.loads(body_unicode)
         # responses = request.data.get("data")
         for response in responses: 
             #print("response: " + response)
@@ -138,11 +138,13 @@ class HouseholeTable(APIView):
         return Response(serializer.data)
     def post(self, request):
         results = []
-        responses = request.data.get("data")
-        # body_unicode = request.data.get("data")
-        # responses = json.loads(body_unicode)
+        # responses = request.data.get("data")
+        body_unicode = request.data.get("data")
+        string_resp = [json.dumps(i) for i in body_unicode if i]
+        responses = [json.loads(i) for i in string_resp if i]
         for response in responses:
-            parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
+            locationID = int(response['parentLocID'])
+            parentLocID = get_object_or_404(Location, locationID=locationID)
             enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
             responseInstance, created = HouseHold.objects.get_or_create(
                 householdID=response['householdID'],
@@ -180,6 +182,7 @@ class HouseholeTable(APIView):
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
         return Response(serializer.data)
+        # return Response("hell")
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
 # For developer use only -> should not be able to create new users from the website, only admin allowed to add new users
@@ -203,7 +206,6 @@ class LoginView(APIView):
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
-            print("success!")
             return Response({"token": user.auth_token.key})
         else:
             return Response({"error": "Wrong credentials"}, status=status.HTTP_400_BAD_REQUEST)
