@@ -61,7 +61,7 @@ class QRelTable(APIView):
 
 class PatientTable(APIView):
     def get(self, request):
-        location = request.data.get("clusterID")
+        location = request.GET.get("clusterID")
         # Exception of no data found
         data = Patient.objects.filter(householdID__parentLocID = location)
         serializer = PatientSerializer(data, many=True)
@@ -104,12 +104,14 @@ class QuestionResponseTable(APIView):
         return Response("GET")
     
     def post(self, request):
+        # results = []
+        # body_unicode = request.data.get("data")
+        # string_resp = [json.dumps(i) for i in body_unicode if i]
+        # responses = [json.loads(i) for i in string_resp if i]
+        # # responses = json.loads(body_unicode)
+        # # responses = request.data.get("data")
         results = []
-        body_unicode = request.data.get("data")
-        string_resp = [json.dumps(i) for i in body_unicode if i]
-        responses = [json.loads(i) for i in string_resp if i]
-        # responses = json.loads(body_unicode)
-        # responses = request.data.get("data")
+        responses = request.data
         for response in responses: 
             #print("response: " + response)
             patient = get_object_or_404(Patient, patientID=response['patientID'])
@@ -132,19 +134,15 @@ class QuestionResponseTable(APIView):
 
 class HouseholeTable(APIView):
     def get(self, request):
-        clusterID = request.data.get("clusterID")
+        clusterID = request.GET.get("clusterID")
         data = HouseHold.objects.filter(parentLocID=clusterID)
         serializer = HouseholdSerializer(data, many=True)
         return Response(serializer.data)
     def post(self, request):
         results = []
-        # responses = request.data.get("data")
-        body_unicode = request.data.get("data")
-        string_resp = [json.dumps(i) for i in body_unicode if i]
-        responses = [json.loads(i) for i in string_resp if i]
+        responses = request.data
         for response in responses:
-            locationID = int(response['parentLocID'])
-            parentLocID = get_object_or_404(Location, locationID=locationID)
+            parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
             enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
             responseInstance, created = HouseHold.objects.get_or_create(
                 householdID=response['householdID'],
@@ -182,7 +180,6 @@ class HouseholeTable(APIView):
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
         return Response(serializer.data)
-        # return Response("hell")
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
 # For developer use only -> should not be able to create new users from the website, only admin allowed to add new users
@@ -206,6 +203,7 @@ class LoginView(APIView):
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
+            print("success!")
             return Response({"token": user.auth_token.key})
         else:
             return Response({"error": "Wrong credentials"}, status=status.HTTP_400_BAD_REQUEST)
