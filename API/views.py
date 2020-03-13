@@ -72,7 +72,7 @@ class PatientTable(APIView):
 
 class PatientAssessmentTable(APIView):
     def get(self, request):
-        location = request.data.get("clusterID")
+        location = request.GET.get("clusterID")
         # Exception of no data found
         data = PatientAssessment.objects.filter(assess_patientID__householdID__parentLocID = location)
         serializer = PatientAssessmentSerializer(data, many=True)
@@ -113,7 +113,6 @@ class QuestionResponseTable(APIView):
         results = []
         responses = request.data
         for response in responses: 
-            #print("response: " + response)
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])
@@ -138,6 +137,8 @@ class HouseholeTable(APIView):
         data = HouseHold.objects.filter(parentLocID=clusterID)
         serializer = HouseholdSerializer(data, many=True)
         return Response(serializer.data)
+# /tables/Household?clusterID=34
+
     def post(self, request):
         results = []
         responses = request.data
@@ -175,10 +176,11 @@ class HouseholeTable(APIView):
                 a2q12=response['a2q12'],
                 a2q13=response['a2q13']
             )
-            if created == False:
-                responseInstance.save()
+            # if created == False:
+            #     responseInstance.save()
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
+        # return Response(serializer.data)
         return Response(serializer.data)
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user

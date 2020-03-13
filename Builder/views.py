@@ -43,6 +43,7 @@ from .forms import *
         - Allows user to set skip logic within the questionnaire
         - Automatically adds skip logic to server database Logic Table and QuestionRelation Table
 """
+
 @login_required
 def questionnaires(request):
     questionnaires = Questionnaire.objects.all() 
