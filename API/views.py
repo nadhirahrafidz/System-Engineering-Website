@@ -61,7 +61,7 @@ class QRelTable(APIView):
 
 class PatientTable(APIView):
     def get(self, request):
-        location = request.data.get("clusterID")
+        location = request.GET.get("clusterID")
         # Exception of no data found
         data = Patient.objects.filter(householdID__parentLocID = location)
         serializer = PatientSerializer(data, many=True)
@@ -72,7 +72,7 @@ class PatientTable(APIView):
 
 class PatientAssessmentTable(APIView):
     def get(self, request):
-        location = request.data.get("clusterID")
+        location = request.GET.get("clusterID")
         # Exception of no data found
         data = PatientAssessment.objects.filter(assess_patientID__householdID__parentLocID = location)
         serializer = PatientAssessmentSerializer(data, many=True)
@@ -105,13 +105,19 @@ class QuestionResponseTable(APIView):
     
     def post(self, request):
         results = []
+        # CORRECT:
+        # responses = json.loads(request.data.get("data"))
+
+        # FOR POSTMAN:
+        # https://stackoverflow.com/questions/42354001/python-json-object-must-be-str-bytes-or-bytearray-not-dict/42354033
         body_unicode = request.data.get("data")
         string_resp = [json.dumps(i) for i in body_unicode if i]
         responses = [json.loads(i) for i in string_resp if i]
+
+        # ORIGINAL IMPLEMENTATION:
         # responses = json.loads(body_unicode)
         # responses = request.data.get("data")
         for response in responses: 
-            #print("response: " + response)
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])
@@ -132,19 +138,23 @@ class QuestionResponseTable(APIView):
 
 class HouseholeTable(APIView):
     def get(self, request):
-        clusterID = request.data.get("clusterID")
+        clusterID = request.GET.get("clusterID")
         data = HouseHold.objects.filter(parentLocID=clusterID)
         serializer = HouseholdSerializer(data, many=True)
         return Response(serializer.data)
+# /tables/Household?clusterID=34
+
     def post(self, request):
         results = []
-        # responses = request.data.get("data")
+        # CORRECT:
+        # responses = json.loads(request.data.get("data"))
+
+        # FOR POSTMAN:
         body_unicode = request.data.get("data")
         string_resp = [json.dumps(i) for i in body_unicode if i]
         responses = [json.loads(i) for i in string_resp if i]
         for response in responses:
-            locationID = int(response['parentLocID'])
-            parentLocID = get_object_or_404(Location, locationID=locationID)
+            parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
             enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
             responseInstance, created = HouseHold.objects.get_or_create(
                 householdID=response['householdID'],
@@ -177,12 +187,12 @@ class HouseholeTable(APIView):
                 a2q12=response['a2q12'],
                 a2q13=response['a2q13']
             )
-            if created == False:
-                responseInstance.save()
+            # if created == False:
+            #     responseInstance.save()
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
+        # return Response(serializer.data)
         return Response(serializer.data)
-        # return Response("hell")
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user
 # For developer use only -> should not be able to create new users from the website, only admin allowed to add new users

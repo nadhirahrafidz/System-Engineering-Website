@@ -2,7 +2,7 @@ from django.db import models
 from datetime import date
 
 class Enumerator(models.Model):
-    enumeratorID = models.IntegerField(verbose_name='enumeratorID', primary_key=True, unique=True)
+    enumeratorID = models.CharField(verbose_name='enumeratorID', primary_key=True, unique=True, max_length=100)
     CHOICES = (
         ('MR', 'Mr'),
         ('MRS', 'Mrs'),
@@ -17,7 +17,6 @@ class Enumerator(models.Model):
     organization = models.CharField(verbose_name='organization', max_length=100, blank=True)
     date_of_birth = models.CharField(max_length=35)
     active_flag = models.BooleanField(verbose_name='active_flag', default=True)
-    qualifications = models.CharField(verbose_name='qualifications', max_length=100)
     username = models.CharField(verbose_name='username', max_length=100)
     email = models.EmailField(verbose_name='email', max_length=100)
 
