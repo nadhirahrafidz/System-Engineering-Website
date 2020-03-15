@@ -215,19 +215,14 @@ class QuestionResponseTable(APIView):
         return Response("GET")
     
     def post(self, request):
+        # results = []
+        # body_unicode = request.data.get("data")
+        # string_resp = [json.dumps(i) for i in body_unicode if i]
+        # responses = [json.loads(i) for i in string_resp if i]
+        # # responses = json.loads(body_unicode)
+        # # responses = request.data.get("data")
         results = []
-        # CORRECT:
-        # responses = json.loads(request.data.get("data"))
-
-        # FOR POSTMAN:
-        # https://stackoverflow.com/questions/42354001/python-json-object-must-be-str-bytes-or-bytearray-not-dict/42354033
-        body_unicode = request.data.get("data")
-        string_resp = [json.dumps(i) for i in body_unicode if i]
-        responses = [json.loads(i) for i in string_resp if i]
-
-        # ORIGINAL IMPLEMENTATION:
-        # responses = json.loads(body_unicode)
-        # responses = request.data.get("data")
+        responses = request.data
         for response in responses: 
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
@@ -257,13 +252,7 @@ class HouseholeTable(APIView):
 
     def post(self, request):
         results = []
-        # CORRECT:
-        # responses = json.loads(request.data.get("data"))
-
-        # FOR POSTMAN:
-        body_unicode = request.data.get("data")
-        string_resp = [json.dumps(i) for i in body_unicode if i]
-        responses = [json.loads(i) for i in string_resp if i]
+        responses = request.data
         for response in responses:
             parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
             enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
@@ -326,6 +315,7 @@ class LoginView(APIView):
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
+            print("success!")
             return Response({"token": user.auth_token.key})
         else:
             return Response({"error": "Wrong credentials"}, status=status.HTTP_400_BAD_REQUEST)
