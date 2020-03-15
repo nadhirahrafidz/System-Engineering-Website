@@ -19,9 +19,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path("", website_auth_views.home_view, name="home"),
 
-    url(r'^home/', include(("Home.urls", "Home"), namespace='Home')),
-    url(r'^reports/', include(("Locations.urls", "Locations"), namespace="Locations")),
-    url(r'^tables/', include(("API.urls", "API"), namespace="API")),
+    url('home/', include(("Home.urls", "Home"), namespace='Home')),
+    url('tables/', include(("API.urls", "API"), namespace="API")),
     url(r'^API-token-auth/', obtain_auth_token, name='api_token_auth'),
 
     # API VIEWS: AUTH - Nadhirah
@@ -33,7 +32,8 @@ urlpatterns = [
     path('social-auth/', include('social_django.urls', namespace="social")),
     path("login/", csrf_exempt(website_auth_views.login_view), name="login"),
     path("logout/", auth_views.LogoutView.as_view(), name="logout"),
-    url(r'^questionnaires/', include(("Builder.urls", "Builder"), namespace="Builder")),
-    url(r'^dashboard/', include(("Dashboard.urls", "Dashboard"), namespace="Dashboard")),
-    url(r'^enumerators/', include(("Users.urls", "Enumerator"), namespace="Enumerator")), 
+    url('questionnaires/', include(("Builder.urls", "Builder"), namespace="Builder")),
+    url('dashboard/', include(("Dashboard.urls", "Dashboard"), namespace="Dashboard")),
+    url('enumerators/', include(("Users.urls", "Enumerator"), namespace="Enumerator")), 
+    url('reports/', include(("Reports.urls", "Reports"), namespace="Reports")),
     ]
