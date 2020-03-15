@@ -172,7 +172,10 @@ def addLogic(request, questionnaire_id):
             currentQForm = lForm.cleaned_data['currentQ']
             currentQ = get_object_or_404(Questions, pk=currentQForm)
             nextQForm = lForm.cleaned_data['nextQ']
-            nextQ = get_object_or_404(Questions, pk=nextQForm)
+            if nextQForm == 'null':
+                nextQ = None
+            else:
+                nextQ = get_object_or_404(Questions, pk=nextQForm)
             relationship = lForm.cleaned_data['relation']
             if(relationship == "INSEQ"):
                 Logic.objects.get_or_create(seq_num=next_seq_num, 

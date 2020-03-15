@@ -9,20 +9,57 @@ from rest_framework.response import Response
 import json
 from API.serializers import *
 
+"""
+API's used to sync table information from server database to mobile application. Only GET or POST (or both) requests are 
+made available for each table. No deletion of data is allowed. 
 
+Authentication token is required to be provided in the header in this form:
+Key: Authorization
+Value: Token {{Token}}
+
+Content type is required to be provided in the header in this form:
+Key: Content-type
+Value: application/json
+
+"""
+
+
+"""
+Database table: mobility.locations_location
+Django Model: Locations.Location
+Endpoint: /tables/Location
+
+GET Request: returns LIST of all locations in server database 
+"""
 class LocationTable(APIView):
     def get(self, request):
         data = Location.objects.all()
         serializer = LocationSerializer(data, many=True)
+        print(type(serializer.data))
         return Response(serializer.data)
 
+"""
+Database table: mobility.questions_questionnaire
+Django Model: Questions.Questionnaire
+Endpoint: /tables/Questionnaire
+
+GET Request: returns LIST of all questionnaires in server database 
+Table Fields: questionnaireID, questionnaireName, questionnaireVersion
+"""
 class QuestionnaireTable(APIView):
     def get(self, request):
         data = Questionnaire.objects.all()
         serializer = QuestionnaireSerializer(data, many=True)
         return Response(serializer.data)
 
-# Only retrieves questions for active questionnaires
+"""
+Database table: mobility.questions_questions
+Django Model: Questions.Questions
+Endpoint: /tables/Questions
+
+GET Request: returns LIST of all questions that belong to questionnaires that are ACTIVE (Questionnaire's active_flag = 1)
+Returned Fields: questionID, questionString, answerMin, answerMax, questionInstruction, questionMedia, questionTypeID, questionnaireID
+"""
 class QuestionTable(APIView):
     def get(self, request):
         # Exception of no data found
@@ -30,7 +67,14 @@ class QuestionTable(APIView):
         serializer = QuestionSerializer(data, many=True)
         return Response(serializer.data)
 
-# Only retrieves answers for active questionnaires
+"""
+Database table: mobility.questions_answer
+Django Model: Questions.Answer
+Endpoint: /tables/Answers
+
+GET Request: returns LIST of all answers that belong to questionnaires that are ACTIVE (Questionnaire's active_flag = 1)
+Returned Fields: questionID, answerID, questionnaireID
+"""
 class AnswerTable(APIView):
     def get(self, request):
         # Exception of no data found
@@ -38,6 +82,15 @@ class AnswerTable(APIView):
         serializer = AnswerSerializer(data, many=True)
         return Response(serializer.data)
 
+
+"""
+Database table: mobility.questions_questionanswer
+Django Model: Questions.QuestionAnswer
+Endpoint: /tables/QuestionAnswer
+
+GET Request: returns LIST of all questions and its related answer(s) from questionnaires that are ACTIVE (Questionnaire's active_flag = 1)
+Returned fields: questionID, questionString, answerMin, answerMax, questionInstruction, questionMedia, questionTypeID, questionnaireID
+"""
 class QuestionAnswerTable(APIView):
     def get(self, request):
         # Exception of no data found
@@ -45,6 +98,14 @@ class QuestionAnswerTable(APIView):
         serializer = QuestionAnswerSerializer(data, many=True)
         return Response(serializer.data)
 
+"""
+Database table: mobility.questions_logic
+Django Model: Questions.Logic
+Endpoint: /tables/Logic
+
+GET Request: returns LIST of all Logic Table entries where questionnaire is active 
+Returned fields: seq_num, logic_questionID, rel_ans_ID, next_qID, rel_type, rel_ID, questionnaireID
+"""
 class LogicTable(APIView):
     def get(self, request):
         # Exception of no data found
@@ -52,6 +113,14 @@ class LogicTable(APIView):
         serializer = LogicSerializer(data, many=True)
         return Response(serializer.data)
 
+"""
+Database table: mobility.questionsrelation
+Django Model: Questions.QuestionRelation
+Endpoint: /tables/Logic
+
+GET Request: returns LIST of all QuestionRelation Table entries whose questionnaire is active 
+Returned fields: question_rel_questionID, questionnaireID, rel_ID, rel_ans_ID, rel_qID
+"""
 class QRelTable(APIView):
     def get(self, request):
         # Exception of no data found
@@ -59,6 +128,23 @@ class QRelTable(APIView):
         serializer = QRelSerializer(data, many=True)
         return Response(serializer.data)
 
+"""
+Database table: mobility.patients_patient
+Django Model: Patients.Patient
+Endpoint: /tables/Patients
+
+GET Request: returns LIST of all Patients Table entries within a certain Cluster Location
+Returned fields: patientID, studyID, date_of_birth, prefix, firstName, middleName, lastName, suffix, com_name, gender, dur_hh, exam_status, 
+notes, lvl_edu, work_status, marital_status, motherFirstName, motherLastName, tel1_num, tel1_owner, tel1_owner_rel, tel2_num, tel2_owner, 
+tel2_owner_rel, nationalID, deceased, deceased_date, responder, proxy_rel, enumeratorID, householdID
+
+Body parameters: clusterID - cluster in which the patient's householdID is registered under (household's parentLocID)
+Key: clusterID
+Example: 
+{
+    "clusterID":"33"
+}
+"""
 class PatientTable(APIView):
     def get(self, request):
         location = request.GET.get("clusterID")
@@ -66,10 +152,35 @@ class PatientTable(APIView):
         data = Patient.objects.filter(householdID__parentLocID = location)
         serializer = PatientSerializer(data, many=True)
         return Response(serializer.data)
-        # {
-	    #     "clusterID":"33"
-        # }
 
+
+"""
+Database table: mobility.questions_patientassessment 
+Django Model: Questions.PatientAssessment
+Endpoint: /tables/PatientAssessment
+
+GET Request: returns LIST of all PatientAssessment Table entries made by patients within a certain Cluster Location
+
+Returned fields: index, questionnaireStatus, start, end, assess_patientID, assess_questionnaireID
+Body parameters: clusterID - cluster in which the patient's householdID is registered under (household's parentLocID)
+Key: clusterID
+Example: 
+{
+    "clusterID":"33"
+}
+
+POST Request
+Example:
+{
+	"data": [{
+		"assess_patientID":"31",
+		"assess_questionnaireID":"3",
+		"questionnaireStatus":"COMPLETE",
+		"start":"2020-02-21",
+		"end":"2020-02-29"
+	}]
+}
+"""
 class PatientAssessmentTable(APIView):
     def get(self, request):
         location = request.GET.get("clusterID")
@@ -129,7 +240,7 @@ class QuestionResponseTable(APIView):
 
             results.append(QuestionResponse.objects.get(pk=responseInstance.index))
         serializer = QuestionResponseSerializer(results, many=True)
-        return Response({"data": serializer.data})
+        return Response(serializer.data)
 
 class HouseholeTable(APIView):
     def get(self, request):
@@ -180,7 +291,6 @@ class HouseholeTable(APIView):
             #     responseInstance.save()
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
-        # return Response(serializer.data)
         return Response(serializer.data)
             
 # https://books.agiliq.com/projects/django-api-polls-tutorial/en/latest/access-control.html#creating-a-user

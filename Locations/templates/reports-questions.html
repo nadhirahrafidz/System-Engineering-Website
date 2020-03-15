@@ -1,0 +1,44 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/reports.css'%}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  
+    <script src="{% static 'js/reports.js' %}"></script>  
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+   
+    <title>Report Questionnaire</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row row-graph">
+            <div class="col">
+                <h2 class="title">Report of a Question</h2>
+            </div>
+        </div>
+        {% for item in data%}
+        <div class="row">
+            <div class="col">
+                <div class="container-graph">
+                    <canvas id="{{forloop.counter}}" width="100" height="100" style="position: relative;"></canvas>
+                    <script>
+                        title = "{{item.questionString}}"
+                        labels_arr = "{{item.answer_list}}".split("$#")
+                        data_arr = "{{item.response_list}}".split("$#").map(function(item){
+                            return parseInt(item, 10);
+                        });
+                        buildChart("{{forloop.counter}}",labels_arr, data_arr, title)
+                    </script>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</body>
+</html>
