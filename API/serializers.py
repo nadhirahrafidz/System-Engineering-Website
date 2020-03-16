@@ -49,7 +49,7 @@ class PatientSerializer(serializers.ModelSerializer):
 class PatientAssessmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = PatientAssessment
-        fields = 'index', 'assess_patientID', 'assess_questionnaireID', 'questionnaireStatus', 'start', 'end'
+        fields = 'index', 'assess_patientID', 'assess_questionnaireID', 'questionnaireStatus', 'start', 'end', 'last_answered_qn'
 
 class QuestionResponseSerializer(serializers.ModelSerializer):
     class Meta:
