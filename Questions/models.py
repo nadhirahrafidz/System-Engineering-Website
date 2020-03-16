@@ -9,10 +9,19 @@ class Questionnaire(models.Model):
         (1, 'True'),
         (0, 'False'),
     )
+    CATEGORY = (
+        ("MOBILITY", 'Mobility Questionnaire'),
+        ("VISION", 'Vision Questionnaire'),
+        ("HEARING", 'Hearing Questionnaire'),
+        ("GENERAL", 'General Questionnaire'),
+        ("HOUSEHOLD", 'Household Questionnaire'),
+        ("PATIENT_INFO", 'Patient Registration Questionnaire'),
+    )
     questionnaireID = models.AutoField(verbose_name='questionnaireID', primary_key=True)
     questionnaireName = models.CharField(verbose_name='questionnaireName', max_length=100)
     questionnaireVersion = models.CharField(verbose_name='questionnaireVersion', max_length=45)
-    active_flag = models.IntegerField(verbose_name='active_flag', default=True, choices=BOOLEAN)
+    active_flag = models.IntegerField(verbose_name='active_flag', default=0, choices=BOOLEAN)
+    questionnaireType = models.CharField(verbose_name='questionnaire_type', max_length=45, choices=CATEGORY)
 
 
 class QuestionType(models.Model):
@@ -60,7 +69,7 @@ class QuestionResponse(models.Model):
 
     class Meta:
         db_table = 'Response'
-        unique_together = ('patientID', 'questionID', 'answerID', 'questionnaireID', 'date')
+        unique_together = ('patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date')
 
 
 class Logic(models.Model):

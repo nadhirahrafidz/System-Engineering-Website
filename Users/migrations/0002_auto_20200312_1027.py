@@ -15,6 +15,10 @@ class Migration(migrations.Migration):
             name='enumeratorID',
             field=models.CharField(max_length=100, primary_key=True, serialize=False, unique=True, verbose_name='enumeratorID'),
         ),
+        migrations.RemoveField(
+            model_name='enumerator',
+            name='qualifications',
+        ),
     ]
     operations = [
         migrations.SeparateDatabaseAndState(state_operations=state_operations)

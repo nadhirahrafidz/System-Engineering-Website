@@ -16,4 +16,15 @@ class Migration(migrations.Migration):
             name='last_answered_qn',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='Questions.Questions'),
         ),
+        # manually added
+        migrations.AddField(
+            model_name='questionnaire',
+            name='questionnaireType',
+            field=models.CharField(default='default', max_length=45, verbose_name='questionnaire_type'),
+            preserve_default=False,
+        ),
+        migrations.AlterUniqueTogether(
+            name='questionresponse',
+            unique_together={('patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date')},
+        ),
     ]

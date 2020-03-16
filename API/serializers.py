@@ -13,7 +13,7 @@ class LocationSerializer(serializers.ModelSerializer):
 class QuestionnaireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questionnaire
-        fields = 'questionnaireID', 'questionnaireName', 'questionnaireVersion'
+        fields = 'questionnaireID', 'questionnaireName', 'questionnaireVersion', 'questionnaireType'
 
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:

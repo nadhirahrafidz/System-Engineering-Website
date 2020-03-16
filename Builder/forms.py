@@ -6,11 +6,11 @@ class questionnaireForm(forms.ModelForm):
 
     class Meta:
         model = Questionnaire
-        fields = ('questionnaireName', 'questionnaireVersion', 'active_flag')
+        fields = ('questionnaireName', 'questionnaireVersion', 'questionnaireType')
         labels = {
             'questionnaireName': ('Questionnaire Name:'),
             'questionnaireVersion': ('Questionnaire Version:'),
-            'active_flag': ('Active Flag:'),
+            'questionnaireType': ('Questionnaire Category:'),
         }
     
 class questionForm(forms.Form):
