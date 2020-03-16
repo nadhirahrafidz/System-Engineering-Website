@@ -230,6 +230,9 @@ def addLogic(request, questionnaire_id):
 
     return render(request, 'logic.html', context)
 
+# def setActiveQnn(request):
+
+
 
 @login_required
 def ajaxAnswer(request):
