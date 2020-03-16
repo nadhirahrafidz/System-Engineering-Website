@@ -99,6 +99,7 @@ class PatientAssessment(models.Model):
     questionnaireStatus = models.CharField(max_length=35)
     start = models.CharField(max_length=35, blank=True)
     end = models.CharField(max_length=35, blank=True)
+    last_answered_qn = models.ForeignKey(Questions, to_field='questionID', blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = ('assess_patientID', 'assess_questionnaireID', 'start')

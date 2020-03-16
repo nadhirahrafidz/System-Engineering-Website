@@ -196,15 +196,21 @@ class PatientAssessmentTable(APIView):
         for item in data:
             patient = get_object_or_404(Patient, pk=item['assess_patientID'])
             questionnaire = get_object_or_404(Questionnaire, pk=item['assess_questionnaireID'])
+            if item['last_answered_qn'] != "":
+                question = get_object_or_404(Questions, pk=item['last_answered_qn'])
+            else:
+                question = None
+
             person, created = PatientAssessment.objects.get_or_create(
                 assess_patientID = patient, 
                 assess_questionnaireID = questionnaire, 
                 start = item['start'],
-                defaults = {'questionnaireStatus': item['questionnaireStatus'], 'end': item['end']})
+                defaults = {'questionnaireStatus': item['questionnaireStatus'], 'end': item['end'], 'last_answered_qn':question})
             
             if created == False:
                 person.questionnaireStatus = item['questionnaireStatus']
                 person.end = item['end']
+                person.last_answered_qn = None
                 person.save()
             results.append(person)   
         serializer = PatientAssessmentSerializer(results, many = True)
@@ -212,7 +218,10 @@ class PatientAssessmentTable(APIView):
 
 class QuestionResponseTable(APIView):
     def get(self, request):
-        return Response("GET")
+        clusterID = request.GET.get("clusterID")
+        data = QuestionResponse.objects.filter(patientID__householdID__parentLocID = clusterID)
+        serializer = QuestionResponseSerializer(data, many=True)
+        return Response(serializer.data)
     
     def post(self, request):
         # results = []
