@@ -54,7 +54,7 @@ class PatientAssessmentSerializer(serializers.ModelSerializer):
 class QuestionResponseSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuestionResponse
-        fields = 'patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date'
+        fields = 'index', 'patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date'
 
 class HouseholdSerializer(serializers.ModelSerializer):
     class Meta:
