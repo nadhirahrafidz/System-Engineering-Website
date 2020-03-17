@@ -152,7 +152,51 @@ class PatientTable(APIView):
         data = Patient.objects.filter(householdID__parentLocID = location)
         serializer = PatientSerializer(data, many=True)
         return Response(serializer.data)
-
+    
+    def post(self, request):
+        data = request.data.get("data")
+        results = []
+        for patient in data:
+            enumerator = get_object_or_404(Enumerator, enumeratorID=patient['enumeratorID'])
+            household = get_object_or_404(HouseHold, householdID=patient['householdID'])
+            patient, created = Patient.objects.get_or_create(
+                patientID=patient['patientID'],
+                studyID=patient['studyID'],
+                date_of_birth=patient['date_of_birth'],
+                prefix=patient['prefix'],
+                firstName=patient['first_name'],
+                middleName=patient['middle_name'],
+                lastName=patient['last_name'],
+                suffix=patient['suffix'],
+                com_name=patient['com_name'],
+                gender=patient['gender'],
+                householdID=household, 
+                dur_hh=patient['dur_hh'],
+                notes=patient['notes'],
+                lvl_edu=patient['lvl_edu'],
+                work_status=patient['work_status'],
+                marital_status=patient['marital_status'],
+                motherFirstName=patient['mother_first_name'],
+                motherLastName=patient['mother_last_name'],
+                tel1_num=patient['tel1_num'],
+                tel1_owner=patient['tel1_owner'],
+                tel1_owner_rel=patient['tel1_owner_rel'],
+                tel2_num=patient['tel2_num'],
+                tel2_owner=patient['tel2_owner'],
+                tel2_owner_rel=patient['tel2_owner_rel'],
+                enumeratorID=enumerator,
+                nationalID=patient['national_id'],
+                deceased=patient['deceased'],
+                deceased_date=patient['deceased_date'],
+                responder=patient['responder'],
+                proxy_name=patient['proxy_name'],
+                proxy_rel=patient['proxy_rel']
+            )
+            if created == False:
+                patient.save()
+            results.append(Patient.objects.get(patientID=patient.patientID))
+        serializer = PatientSerializer(results, many=True)
+        return Response(serializer.data)      
 
 """
 Database table: mobility.questions_patientassessment 
