@@ -70,7 +70,6 @@ def ajaxIncompletePatients(request):
         incomplete_patients = PatientAssessment.objects.filter(
             questionnaireStatus = "INCOMPLETE", 
             assess_patientID__householdID__parentLocID = int(clusterID)).values()
-        # incomplete_patients.select_related('assess_questionnaireID').get('questionnaireName')
     elif regionID != '0':
         incomplete_patients = PatientAssessment.objects.filter(
             questionnaireStatus = "INCOMPLETE",
@@ -80,16 +79,22 @@ def ajaxIncompletePatients(request):
                     questionnaireStatus = "INCOMPLETE",
                     assess_patientID__householdID__parentLocID__parentLocID__parentLocID = int(countryID)).values()
     elif countryID == '0':
-        incomplete_patients = PatientAssessment.objects.filter(questionnaireStatus = "INCOMPLETE").values()
-    
-    # serializer = serializers.PatientAssessmentSerializer(incomplete_patients, many=True)
-    # serializer = serializers.PatientSerializer(incomplete_patients, many=True)
+        incomplete_patients = PatientAssessment.objects.filter(questionnaireStatus = "INCOMPLETE").select_related()
     data = []
     for patient in incomplete_patients:
+        
         data.append({
-            'patient_id' : patient['assess_patientID_id'],
-            'questionnaire_id': patient['assess_questionnaireID_id'],
-            'start': patient['start']
+            'patient_id' : patient.assess_patientID.patientID,
+            'questionnaire_id': patient.assess_questionnaireID.questionnaireID,
+            'questionnaire_name': patient.assess_questionnaireID.questionnaireName,
+            'start': patient.start
         })
+        # data.append({
+        #     'patient_id' : patient['assess_patientID_id'],
+        #     'questionnaire_id': patient['assess_questionnaireID_id'],
+        #     'start': patient['start']
+        # })
+        # print(patient.assess_questionnaireID.questionnaireName)
+        # print(patient.assess_patientID)
 
     return JsonResponse({'data':data})
