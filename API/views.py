@@ -245,6 +245,7 @@ class QuestionResponseTable(APIView):
                                                 questionnaireID=questionnaire,
                                                 date=response['date'])
             if created == False:
+                print("already existed")
                 responseInstance.save()
 
             results.append(QuestionResponse.objects.get(pk=responseInstance.index))
