@@ -60,6 +60,7 @@ def questionnaires(request):
                 'questionnaireID': questionnaire.questionnaireID, 
                 'questionnaireName': questionnaire.questionnaireName,
                 'question': questionList,
+                'active_flag': questionnaire.active_flag
                 })               
     context = {
         'data': data,
@@ -230,7 +231,35 @@ def addLogic(request, questionnaire_id):
 
     return render(request, 'logic.html', context)
 
-# def setActiveQnn(request):
+def setActiveQnn(request):
+    if request.method == 'POST':
+        form = activeQnnForm(request.POST)
+        if form.is_valid():
+            Questionnaire.objects.filter(active_flag=1).update(active_flag=0)
+            p = Questionnaire.objects.get(pk=form.cleaned_data['patientQnn'])
+            p.active_flag = 1
+            p.save()     
+            h = Questionnaire.objects.get(pk=form.cleaned_data['householdQnn'])
+            h.active_flag = 1
+            h.save()
+            g = Questionnaire.objects.get(pk=form.cleaned_data['generalQnn'])
+            g.active_flag = 1
+            g.save()
+            m = Questionnaire.objects.get(pk=form.cleaned_data['mobilityQnn'])
+            m.active_flag = 1
+            m.save()
+            v = Questionnaire.objects.get(pk=form.cleaned_data['visionQnn'])
+            v.active_flag = 1
+            v.save()
+            h = Questionnaire.objects.get(pk=form.cleaned_data['hearingQnn'])
+            h.active_flag = 1
+            h.save()
+            return redirect('/questionnaires/')
+    form = activeQnnForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'active_qnn.html', context)
 
 
 

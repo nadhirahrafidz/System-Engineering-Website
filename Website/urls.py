@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path("", website_auth_views.home_view, name="home"),
 
-    url('home/', include(("Home.urls", "Home"), namespace='Home')),
+    # url('home/', include(("Home.urls", "Home"), namespace='Home')),
     url('tables/', include(("API.urls", "API"), namespace="API")),
     url(r'^API-token-auth/', obtain_auth_token, name='api_token_auth'),
 

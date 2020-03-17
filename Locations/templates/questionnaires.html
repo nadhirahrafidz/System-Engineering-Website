@@ -7,12 +7,14 @@
     <link rel="stylesheet" href="{% static 'css/questionnaires.css' %}" />
     <title>Questionnaires</title>
 </head>
+{% include "navbar.html" %}
 <body>
   
   <div class="container">
     <h2 class="title">Questionnaires</h2>
     
     <a class="btn btn-primary button-margin" href={% url 'Builder:newQuestionnaire' %}>New Questionnaire</a>
+    <a class="btn btn-warning button-margin" href={% url 'Builder:setActiveQnn' %}>Set Active Questionnaires</a>
 
     <h3>List of Questionnaires and Questions</h3>
     {% for data in data %}
@@ -26,6 +28,9 @@
               {{data.questionnaireName}}
             </button>
             <a href="http://127.0.0.1:8000/questionnaires/create/question/{{data.questionnaireID}}" class="small-font">Edit</a>
+            {% if data.active_flag == 1 %}
+            <p class="active">Active</p>
+            {% endif %}
 
           </h2>
         </div>

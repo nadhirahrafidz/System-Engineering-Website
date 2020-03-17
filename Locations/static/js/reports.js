@@ -28,9 +28,13 @@ function buildChart(id,labels, data, title)
         }]
     },
     options: {
+        options: {
+            responsive: true,
+        },
         scales: {
             yAxes: [{
                 ticks: {
+                    stepSize: 1,
                     beginAtZero: true
                 }
             }]
@@ -38,7 +42,7 @@ function buildChart(id,labels, data, title)
         title: {
             display: true,
             text: title,
-            fontSize: 20,
+            fontSize: 18,
         }
     }
 });

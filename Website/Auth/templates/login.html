@@ -3,14 +3,16 @@
 
 {% block title %} Sign in {% endblock %}
 {% block content %}
-<div class="row">
-    <div class>
+<div class="container">
         <form class="site-form" action="{% url 'login' %}" method="POST">
             {% csrf_token %}
-            {{ form | crispy }}
-            <input type="submit" value="Login">
+            <div class="row">
+                <div class="col-sm text-center"> 
+                    {{ form | crispy }}
+                    <input type="submit" value="Login" class="btn btn-dark mb-2">
+                </div>
+            </div>
         </form>
-    </div>
     <div class="col-md-8 mx-auto social-container my-2 order-md-1">
         <button class="btn btn-primary mb-2">
             <a href="{% url 'social:begin' 'facebook' %}">Login with Facebook

@@ -96,6 +96,7 @@ function build_pie_chart(data)
                     }]
                 },
                 options: {
+                    responsive: true,
                 }
             });
 }

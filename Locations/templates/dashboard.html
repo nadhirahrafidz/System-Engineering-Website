@@ -12,6 +12,7 @@
     <title>Document</title>
 </head>
 <body>
+    {% include "navbar.html" %}
     <div class="container">
         {% csrf_token %}
         <h1 class="title">Dashboard</h1>
@@ -33,7 +34,7 @@
         </div>
         <div class="row">
             <div class="col-sm margin-top">
-            <canvas id="myChart" style="position: relative; height:35vh"></canvas>
+            <canvas id="myChart"></canvas>
             </div>
         </div>
         <div class="row">
