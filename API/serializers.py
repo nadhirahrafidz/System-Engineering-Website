@@ -43,7 +43,7 @@ class QRelSerializer(serializers.ModelSerializer):
 class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
-        fields = 'patientID', 'studyID', 'date_of_birth', 'prefix', 'firstName', 'middleName', 'lastName', 'suffix', 'com_name', 'gender', 'householdID', 'dur_hh', 'exam_status', 'notes', 'lvl_edu', 'work_status', 'marital_status', 
+        fields = 'patientID', 'studyID', 'date_of_birth', 'prefix', 'firstName', 'middleName', 'lastName', 'suffix', 'com_name', 'gender', 'householdID', 'dur_hh', 'notes', 'lvl_edu', 'work_status', 'marital_status', 
         'motherFirstName', 'motherLastName', 'tel1_num', 'tel1_owner', 'tel1_owner_rel', 'tel2_num', 'tel2_owner', 'tel2_owner_rel', 'enumeratorID', 'nationalID', 'deceased', 'deceased_date', 'responder', 'proxy_name', 'proxy_rel'
 
 class PatientAssessmentSerializer(serializers.ModelSerializer):
