@@ -16,13 +16,12 @@ class patientTest(APITestCase):
     def setUp(self):
         self.username = 'john_doe'
         self.password = 'foobar'
-        self.user = User.objects.create(username=self.username, password=self.password)
+        self.user = User.objects.create(username= self.username, password=self.password)
         data = {
             "username": self.username,
             "password": self.password
         }
-        token = self.client.post("http://127.0.0.1:8000/login/", data)
-        print(token)
+        token = Token.objects.create(user = self.user)
         self.client = APIClient()
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
     
@@ -32,7 +31,8 @@ class patientTest(APITestCase):
             "email": "test@gmail.com", 
             "password": "something-strong"
         }
-        response = self.client.post("http://127.0.0.1:8000/users/", data)
+        c = RequestsClient()
+        response = c.post("http://127.0.0.1:8000/users/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
     
     def test_registration_duplicate(self):
@@ -41,7 +41,8 @@ class patientTest(APITestCase):
             "email": "test@gmail.com", 
             "password": "something-strong"
         }
-        response = self.client.post("http://127.0.0.1:8000/users/", data)
+        c = RequestsClient()
+        response = c.post("http://127.0.0.1:8000/users/", data)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     def test_login(self):
@@ -49,7 +50,8 @@ class patientTest(APITestCase):
             "username": "test-user",
             "password": "something-strong"
         }
-        response = self.client.post("http://127.0.0.1:8000/login/", data_login)
+        c = RequestsClient()
+        response = c.post("http://127.0.0.1:8000/login/", data_login)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
     
     def test_Location(self):

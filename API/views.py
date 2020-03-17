@@ -155,7 +155,10 @@ class PatientTable(APIView):
     def post(self, request):
         data = request.data
         results = []
-        for patient in data:
+        for patient in data['data']:
+            print(patient)
+            # print(patient['enumeratorID'])
+            # print(type(patient['enumeratorID']))
             enumerator = get_object_or_404(Enumerator, enumeratorID=patient['enumeratorID'])
             household = get_object_or_404(HouseHold, householdID=patient['householdID'])
             patient, created = Patient.objects.get_or_create(
@@ -236,7 +239,7 @@ class PatientAssessmentTable(APIView):
         # An array of PatientAssessment Table Entries
         results = []
         data = request.data
-        for item in data:
+        for item in data['data']:
             patient = get_object_or_404(Patient, pk=item['assess_patientID'])
             questionnaire = get_object_or_404(Questionnaire, pk=item['assess_questionnaireID'])
             if item['last_answered_qn'] != -1:
@@ -269,7 +272,7 @@ class QuestionResponseTable(APIView):
     def post(self, request):
         results = []
         responses = request.data
-        for response in responses: 
+        for response in responses['data']: 
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])
@@ -300,7 +303,7 @@ class HouseholeTable(APIView):
     def post(self, request):
         results = []
         responses = request.data
-        for response in responses:
+        for response in responses['data']:
             parentLocID = get_object_or_404(Location, locationID=response['parentLocID'])
             enumeratorID = get_object_or_404(Enumerator, enumeratorID=response['enumeratorID'])
             responseInstance, created = HouseHold.objects.get_or_create(
