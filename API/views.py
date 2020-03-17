@@ -196,7 +196,7 @@ class PatientAssessmentTable(APIView):
         for item in data:
             patient = get_object_or_404(Patient, pk=item['assess_patientID'])
             questionnaire = get_object_or_404(Questionnaire, pk=item['assess_questionnaireID'])
-            if item['last_answered_qn'] != "":
+            if item['last_answered_qn'] != -1:
                 question = get_object_or_404(Questions, pk=item['last_answered_qn'])
             else:
                 question = None
@@ -224,12 +224,6 @@ class QuestionResponseTable(APIView):
         return Response(serializer.data)
     
     def post(self, request):
-        # results = []
-        # body_unicode = request.data.get("data")
-        # string_resp = [json.dumps(i) for i in body_unicode if i]
-        # responses = [json.loads(i) for i in string_resp if i]
-        # # responses = json.loads(body_unicode)
-        # # responses = request.data.get("data")
         results = []
         responses = request.data
         for response in responses: 
@@ -296,8 +290,8 @@ class HouseholeTable(APIView):
                 a2q12=response['a2q12'],
                 a2q13=response['a2q13']
             )
-            # if created == False:
-            #     responseInstance.save()
+            if created == False:
+                responseInstance.save()
             results.append(HouseHold.objects.get(householdID=responseInstance.householdID))
         serializer = HouseholdSerializer(results, many=True)
         return Response(serializer.data)

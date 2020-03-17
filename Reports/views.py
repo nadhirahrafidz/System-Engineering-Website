@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect, HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from Reports.forms import reportForm
 from Questions.models import *
+from Locations.models import *
 
 # Create your views here.
 def chooseLocation(request):
@@ -41,6 +42,8 @@ def chooseQuestionnaire(request, clusterID):
 
 def reportQnn(request, clusterID, questionnaireID):
     data = []
+    questionnaire = Questionnaire.objects.get(pk=questionnaireID)
+    location = Location.objects.get(pk=clusterID)
     questions = Questions.objects.filter(questionnaireID=questionnaireID).order_by('questionID').values()
     for question in questions:
         questionString = question['questionString']
@@ -64,6 +67,9 @@ def reportQnn(request, clusterID, questionnaireID):
         data.append(data_dict)   
     context = {
         "data": data,
-        "test": "hello"
+        "questionnaire": questionnaire.questionnaireName,
+        "country": location.parentLocID.parentLocID.locationName,
+        "region": location.parentLocID.locationName,
+        "cluster": location.locationName
     }
     return render(request, 'reports-questions.html', context)

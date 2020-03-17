@@ -9,21 +9,22 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">  
     <script src="{% static 'js/reports.js' %}"></script>  
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-   
     <title>Report Questionnaire</title>
 </head>
 <body>
+    {% include "navbar.html" %}
     <div class="container">
         <div class="row row-graph">
             <div class="col">
-                <h2 class="title">Report of a Question</h2>
+                <h2 class="title">Report On: {{questionnaire}}</h2>
+                <h5 class="title">Location: {{country}}, {{region}}, {{cluster}}</h5>
             </div>
         </div>
         {% for item in data%}
         <div class="row">
             <div class="col">
                 <div class="container-graph">
-                    <canvas id="{{forloop.counter}}" width="100" height="100" style="position: relative;"></canvas>
+                    <canvas id="{{forloop.counter}}"></canvas>
                     <script>
                         title = "{{item.questionString}}"
                         labels_arr = "{{item.answer_list}}".split("$#")

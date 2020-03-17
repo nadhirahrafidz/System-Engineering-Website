@@ -4,5 +4,7 @@
 }
 
 .container-graph{
-    margin-bottom: 100;
+    margin: 0 auto 60 auto;
+    height: auto;
+    width: 750px;
 }

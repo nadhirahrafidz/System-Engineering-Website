@@ -12,7 +12,30 @@ class questionnaireForm(forms.ModelForm):
             'questionnaireVersion': ('Questionnaire Version:'),
             'questionnaireType': ('Questionnaire Category:'),
         }
-    
+
+class activeQnnForm(forms.Form):
+    householdQnn = forms.ChoiceField(label='Household Questionnaire')
+    patientQnn = forms.ChoiceField(label='Patient Registration Questionnaire')
+    generalQnn = forms.ChoiceField(label='General Questionnaire')
+    mobilityQnn = forms.ChoiceField(label='Mobility Questionnaire')
+    visionQnn = forms.ChoiceField(label='Vision Questionnaire')
+    hearingQnn = forms.ChoiceField(label='Hearing Questionnaire')
+
+    def __init__(self, *args,**kwargs):
+        super(activeQnnForm, self).__init__(*args, **kwargs)
+        householdList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "HOUSEHOLD")]
+        patientList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "PATIENT_INFO")]
+        generalList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "GENERAL")]
+        mobilityList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "MOBILITY")]
+        visionList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "VISION")]
+        hearingList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "HEARING")]
+        self.fields['householdQnn'].choices = householdList
+        self.fields['patientQnn'].choices = patientList
+        self.fields['generalQnn'].choices = generalList
+        self.fields['mobilityQnn'].choices = mobilityList
+        self.fields['visionQnn'].choices = visionList
+        self.fields['hearingQnn'].choices = hearingList
+
 class questionForm(forms.Form):
     question = forms.CharField(label='Question', widget=forms.Textarea(attrs={"rows":3, "cols":20}), max_length=300)
     CHOICES = [('1', 'Single Answer'), ('2', 'Multiple Answers'), ('3', 'Text Answer')]
