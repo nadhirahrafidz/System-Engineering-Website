@@ -153,7 +153,7 @@ class PatientTable(APIView):
         return Response(serializer.data)
     
     def post(self, request):
-        data = request.data.get("data")
+        data = request.data
         results = []
         for patient in data:
             enumerator = get_object_or_404(Enumerator, enumeratorID=patient['enumeratorID'])
@@ -235,7 +235,7 @@ class PatientAssessmentTable(APIView):
     def post(self, request):
         # An array of PatientAssessment Table Entries
         results = []
-        data = request.data.get("data")
+        data = request.data
         for item in data:
             patient = get_object_or_404(Patient, pk=item['assess_patientID'])
             questionnaire = get_object_or_404(Questionnaire, pk=item['assess_questionnaireID'])
@@ -282,6 +282,7 @@ class QuestionResponseTable(APIView):
                                                 questionnaireID=questionnaire,
                                                 date=response['date'])
             if created == False:
+                print("already existed")
                 responseInstance.save()
 
             results.append(QuestionResponse.objects.get(pk=responseInstance.index))
