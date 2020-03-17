@@ -44,31 +44,33 @@ function get_patient_data(countryID, regionID, clusterID)
             $("#patient_table_body").empty();
             for(data in response.data)
             {
-                build_row(response.data[i].patient_id,response.data[i].questionnaire_id,response.data[i].start);
+                build_row(response.data[i].patient_id, response.data[i].questionnaire_id, response.data[i].questionnaire_name, response.data[i].start);
                 i++;
             }
         }
     });
 }
 
-function build_row(patientID, questionnaireID, start)
+function build_row(patientID, questionnaireID, questionnaireString, start)
 {
     tableBody = $("#patient_table_body")
     header_open = "<tr>"
     header_close = "</tr>"
     tableBody.append(header_open)
-    build_data_in_row(patientID, questionnaireID, start)
+    build_data_in_row(patientID, questionnaireID, questionnaireString, start)
     tableBody.append(header_close)
 }
 
-function build_data_in_row(patientID, questionnaireID, start)
+function build_data_in_row(patientID, questionnaireID, questionnaireString, start)
 {
     tableBody = $("#patient_table_body") 
     patientID = "<td>" + patientID + "</td>"
     questionnaireID = "<td>" + questionnaireID + "</td>"
+    questionnaireString = "<td>" + questionnaireString + "</td>"
     markup = "<td>" + start + "</td>"
     tableBody.append(patientID) 
     tableBody.append(questionnaireID)
+    tableBody.append(questionnaireString)
     tableBody.append(markup) 
 }
 

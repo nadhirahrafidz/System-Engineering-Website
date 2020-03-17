@@ -2,8 +2,17 @@ from django import forms
 from Questions.models import *
 from django.forms import formset_factory
 
+"""
+    Holds all the forms used in the website's Questionnaire Builder Feature. 
+    List of questionnaires:
+    1. Create a new questionnaire form (class questionnaireForm)
+    2. Set active questionnaires (class activeQnnForm)
+    3. Create new questions form (class questionForm)
+    4. Create new answers form for a questionnaire (class answerForm)
+    5. Set Logic for Questionnaire (class logicForm)
+    6. Set 'OR' and 'AND' logic for Questionnaire Logic [to be inserted in questionrelation Table] (class qrelForm)
+"""
 class questionnaireForm(forms.ModelForm):
-
     class Meta:
         model = Questionnaire
         fields = ('questionnaireName', 'questionnaireVersion', 'questionnaireType')
@@ -21,6 +30,7 @@ class activeQnnForm(forms.Form):
     visionQnn = forms.ChoiceField(label='Vision Questionnaire')
     hearingQnn = forms.ChoiceField(label='Hearing Questionnaire')
 
+    # Prepopulating the form's ChoiceFields with questionnaires from the server database
     def __init__(self, *args,**kwargs):
         super(activeQnnForm, self).__init__(*args, **kwargs)
         householdList = [(qnn.questionnaireID, qnn.questionnaireName) for qnn in Questionnaire.objects.filter(questionnaireType = "HOUSEHOLD")]
@@ -55,6 +65,7 @@ class logicForm(forms.Form):
     relation = forms.ChoiceField(label='Relationship', widget=forms.Select, choices=RELCHOICES)
     answerNext = forms.ChoiceField(label='Conditional Answer', widget=forms.Select)
 
+    # Pre-populating the ChoiceFields with existing questions and answers for a specific questionnaire
     def __init__(self, *args,**kwargs):
         self.questionnaire_id = kwargs.pop("questionnaire_id")
         super(logicForm, self).__init__(*args, **kwargs)
