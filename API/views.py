@@ -35,7 +35,6 @@ class LocationTable(APIView):
     def get(self, request):
         data = Location.objects.all()
         serializer = LocationSerializer(data, many=True)
-        print(type(serializer.data))
         return Response(serializer.data)
 
 """
@@ -362,7 +361,6 @@ class LoginView(APIView):
         password = request.data.get("password")
         user = authenticate(username=username, password=password)
         if user:
-            print("success!")
             return Response({"token": user.auth_token.key})
         else:
             return Response({"error": "Wrong credentials"}, status=status.HTTP_400_BAD_REQUEST)

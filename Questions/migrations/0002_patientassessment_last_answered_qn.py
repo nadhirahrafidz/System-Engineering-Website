@@ -25,6 +25,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterUniqueTogether(
             name='questionresponse',
-            unique_together={('patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date')},
+            unique_together={},
+            # unique_together={('patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date')},
         ),
     ]

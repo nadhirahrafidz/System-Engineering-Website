@@ -1,39 +1,62 @@
 from django.test import TestCase
+from django.urls import reverse
+from rest_framework.test import force_authenticate, APIRequestFactory, APITestCase
+from rest_framework import status
+from rest_framework.test import RequestsClient
+import json
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+from rest_framework.test import APIClient
 from Patients.models import *
+from Locations.models import *
 # Create your tests here.
 
-class testCaseSetUp(APITestCase):
+class patientTest(APITestCase):
+
     def setUp(self):
-        self.patient = Patient.objects.create(
-            patientID= "123abcd",
-			studyID= "123abcd",
-			date_of_birth= "2020-03-17",
-			prefix= "Miss",
-			firstName= "Emily",
-			middleName= "March",
-			lastName= "Bronte",
-			suffix= "",
-			com_name= "Emily",
-			gender= "F",
-			householdID= "3",
-			dur_hh= "1",
-			notes= "",
-			lvl_edu= "TERTIARY",
-			work_status= "EMPLOYED",
-			marital_status= "MARRIED",
-			motherFirstName= "Charlotte",
-			motherLastName= "March",
-			tel1_num= "0123170335",
-			tel1_owner= "SELF",
-			tel1_owner_rel= "SELF",
-			tel2_num= "",
-			tel2_owner= "",
-			tel2_owner_rel= "",
-			enumeratorID= "1",
-			nationalID= "980720327163",
-			deceased= 0,
-			deceased_date= None,
-			responder= "Emily Bronte",
-			proxy_name= "",
-			proxy_rel= ""
+        self.username = 'john_doe'
+        self.password = 'foobar'
+        self.user = User.objects.create(username=self.username, password=self.password)
+        data = {
+            "username": self.username,
+            "password": self.password
+        }
+        token = self.client.post("http://127.0.0.1:8000/login/", data)
+        print(token)
+        self.client = APIClient()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+    
+    def test_registration(self):
+        data = {
+            "username": "test-user", 
+            "email": "test@gmail.com", 
+            "password": "something-strong"
+        }
+        response = self.client.post("http://127.0.0.1:8000/users/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    
+    def test_registration_duplicate(self):
+        data = {
+            "username": "test-user", 
+            "email": "test@gmail.com", 
+            "password": "something-strong"
+        }
+        response = self.client.post("http://127.0.0.1:8000/users/", data)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+
+    def test_login(self):
+        data_login = {
+            "username": "test-user",
+            "password": "something-strong"
+        }
+        response = self.client.post("http://127.0.0.1:8000/login/", data_login)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_Location(self):
+        Location.objects.create(
+            locationID="1",
+            locationName="Malaysia",
+            parentLocID = None
         )
+        response = self.client.get("http://127.0.0.1:8000/tables/Location")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

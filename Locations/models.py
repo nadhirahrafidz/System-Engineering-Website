@@ -5,7 +5,7 @@ class Location(models.Model):
     # AutoField is an Integer field that auto-increments
     locationID = models.AutoField(verbose_name='locationID',primary_key=True, default=0)
     locationName = models.CharField(verbose_name='locationName', max_length=45)
-    parentLocID = models.ForeignKey('self', verbose_name='parentLocationID', on_delete=models.CASCADE)
+    parentLocID = models.ForeignKey('self', verbose_name='parentLocationID', on_delete=models.CASCADE, blank=True, null=True)
 
 
 class HouseHold(models.Model):

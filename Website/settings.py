@@ -104,6 +104,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mobility',
+        'TEST': {
+            'NAME': 'test_mobility',
+        },
         'USER': 'myadmin@sysengmysqlserver',
         'PASSWORD': 'Admin29MySQL',
         'HOST': 'sysengmysqlserver.mysql.database.azure.com',
@@ -111,7 +114,7 @@ DATABASES = {
         'OPTIONS': {
             'ssl': {'ssl-ca': '/var/www/html/BaltimoreCyberTrustRoot.crt.pem'},
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        }
+        },
     }
 }
 

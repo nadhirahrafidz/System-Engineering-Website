@@ -63,13 +63,13 @@ class QuestionResponse(models.Model):
     patientID = models.ForeignKey(Patient, on_delete=models.CASCADE)
     questionID = models.ForeignKey(Questions, on_delete=models.CASCADE)
     answerID = models.ForeignKey(Answer, on_delete=models.CASCADE, blank = True, null= True)
-    text = models.TextField(verbose_name='text', blank=True)
+    text = models.CharField(verbose_name='text', blank=True, max_length=300)
     questionnaireID = models.ForeignKey(Questionnaire, on_delete=models.CASCADE)
     date = models.CharField(max_length=35)
 
-    class Meta:
-        db_table = 'Response'
-        unique_together = ('patientID', 'questionID', 'answerID', 'text', 'questionnaireID', 'date')
+    # class Meta:
+    #     db_table = 'Response'
+    #     unique_together = ('patientID', 'questionID', 'answerID', 'questionnaireID', 'date')
 
 
 class Logic(models.Model):
