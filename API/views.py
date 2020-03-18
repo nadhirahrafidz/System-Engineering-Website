@@ -195,7 +195,8 @@ class PatientTable(APIView):
                 proxy_rel=patient['proxy_rel']
             )
             if created == False:
-                patient.save()
+                print("exists")
+                # patient.save()
             results.append(Patient.objects.get(patientID=patient.patientID))
         serializer = PatientSerializer(results, many=True)
         return Response(serializer.data)      

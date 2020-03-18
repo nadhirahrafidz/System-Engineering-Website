@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.test import APIClient
 from Patients.models import *
 from Locations.models import *
+from django.db import transaction
 # Create your tests here.
 
 class patientTest(APITestCase):
@@ -16,14 +17,15 @@ class patientTest(APITestCase):
     def setUp(self):
         self.username = 'john_doe'
         self.password = 'foobar'
-        self.user = User.objects.create(username= self.username, password=self.password)
-        data = {
-            "username": self.username,
-            "password": self.password
-        }
-        token = Token.objects.create(user = self.user)
-        self.client = APIClient()
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
+        with transaction.atomic():
+            self.user = User.objects.create(username= self.username, password=self.password)
+            data = {
+                "username": self.username,
+                "password": self.password
+            }
+            token = Token.objects.create(user = self.user)
+            self.client = APIClient()
+            self.client.credentials(HTTP_AUTHORIZATION='Token ' + token.key)
     
     def test_registration(self):
         data = {
