@@ -157,8 +157,6 @@ class PatientTable(APIView):
         results = []
         for patient in data['data']:
             print(patient)
-            # print(patient['enumeratorID'])
-            # print(type(patient['enumeratorID']))
             enumerator = get_object_or_404(Enumerator, enumeratorID=patient['enumeratorID'])
             household = get_object_or_404(HouseHold, householdID=patient['householdID'])
             patient, created = Patient.objects.get_or_create(
@@ -196,10 +194,14 @@ class PatientTable(APIView):
             )
             if created == False:
                 print("exists")
-                # patient.save()
+                patient.save()
+            else:
+                print("heres")
             results.append(Patient.objects.get(patientID=patient.patientID))
+        print("serializing")
         serializer = PatientSerializer(results, many=True)
-        return Response(serializer.data)      
+        return Response("HEllo")
+        # return Response(serializer.data)      
 
 """
 Database table: mobility.questions_patientassessment 
@@ -274,6 +276,7 @@ class QuestionResponseTable(APIView):
         results = []
         responses = request.data
         for response in responses['data']: 
+            # If API response is : "detail": "Not found." -> patient / question does not exist in Patients/Questions table
             patient = get_object_or_404(Patient, patientID=response['patientID'])
             question = get_object_or_404(Questions, pk=response['questionID'])
             answer = get_object_or_404(Answer, pk=response['answerID'])

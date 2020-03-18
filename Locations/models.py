@@ -9,7 +9,7 @@ class Location(models.Model):
 
 
 class HouseHold(models.Model):
-    householdID = models.CharField(verbose_name='householdID', max_length=35, primary_key=True)
+    householdID = models.CharField(verbose_name='householdID', max_length=100, primary_key=True)
     parentLocID = models.ForeignKey(Location, verbose_name='clusterID', on_delete=models.CASCADE)
     enumeratorID = models.ForeignKey(Enumerator, verbose_name='enumeratorID', max_length=100, on_delete=models.CASCADE)
     date = models.CharField(max_length=35, blank=False)

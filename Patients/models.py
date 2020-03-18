@@ -13,8 +13,8 @@ class Patient(models.Model):
         (1, 'True'),
         (0, 'False'),
     )
-    patientID = models.CharField(verbose_name='patientID', max_length=35, primary_key=True)
-    studyID = models.CharField(verbose_name='studyID', max_length=35, unique=True)
+    patientID = models.CharField(verbose_name='patientID', max_length=100, primary_key=True)
+    studyID = models.CharField(verbose_name='studyID', max_length=100, unique=True)
     date_of_birth = models.CharField(verbose_name='date_of_birth', max_length=35)
     prefix = models.CharField(verbose_name='prefix', max_length=45, blank=True)
     firstName = models.CharField(verbose_name='firstName', max_length=45)
