@@ -7,7 +7,7 @@ chardet==3.0.4
 Click==7.0
 cycler==0.10.0
 defusedxml==0.6.0
-Django==3.0.3
+Django==3.1.13
 django-templated-mail==1.1.1
 djangorestframework==3.11.0
 djoser==2.0.3
